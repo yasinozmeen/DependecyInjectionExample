@@ -8,6 +8,6 @@
 import Foundation
 
 public enum UnsplashUrl: String {
-    case url = "https://api.unsplash.com/photos/random/?client_id=XUC1v9TZNdtuzI7KVr8XXviHA4_fkSIcEasagjp0AAs"
+    case url = "https://api.unsplash.com/photos/random/?client_id=YOUR_API_KEY"
 }
 
