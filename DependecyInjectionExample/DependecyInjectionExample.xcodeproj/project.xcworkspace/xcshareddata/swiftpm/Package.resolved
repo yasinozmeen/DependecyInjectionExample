@@ -1,0 +1,32 @@
+{
+  "pins" : [
+    {
+      "identity" : "alamofire",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/Alamofire/Alamofire.git",
+      "state" : {
+        "revision" : "bc268c28fb170f494de9e9927c371b8342979ece",
+        "version" : "5.7.1"
+      }
+    },
+    {
+      "identity" : "alamofireimage",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/Alamofire/AlamofireImage",
+      "state" : {
+        "revision" : "98cbb00ce0ec5fc8e52a5b50a6bfc08d3e5aee10",
+        "version" : "4.2.0"
+      }
+    },
+    {
+      "identity" : "snapkit",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/SnapKit/SnapKit",
+      "state" : {
+        "revision" : "f222cbdf325885926566172f6f5f06af95473158",
+        "version" : "5.6.0"
+      }
+    }
+  ],
+  "version" : 2
+}
