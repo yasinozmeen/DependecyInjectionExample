@@ -7,6 +7,7 @@
 
 import Foundation
 import CoreGraphics
+import AlamofireImage
 
 class GetImageManager {
     private let getImageService: GetImageProtocol
@@ -15,11 +16,12 @@ class GetImageManager {
         self.getImageService = getImageService
     }
     
-    func getImage(url: String, onSuccess: @escaping (CGImage?)->(), onError: @escaping (String?)->()) {
-        getImageService.getImage(url: "https://images.unsplash.com/photo-1685322556468-68028d914042?ixid=M3w0NTQyNTF8MHwxfHJhbmRvbXx8fHx8fHx8fDE2ODcyNTI3NTZ8&ixlib=rb-4.0.3"){ cgImage in
-            onSuccess(cgImage)
+    func getImage(url: String, onSuccess: @escaping (Image)->(), onError: @escaping (String?)->()) {
+        getImageService.getImage(url:url){ cgImage in
+            onSuccess(cgImage!)
         } onError: { error in
             onError(error)
         }
     }
 }
+

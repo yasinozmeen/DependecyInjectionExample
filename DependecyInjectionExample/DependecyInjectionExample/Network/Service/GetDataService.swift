@@ -18,11 +18,10 @@ final class GetDataService:GetDataProtocol {
     func fetch<T>(path: String, onSuccess: @escaping (T) -> Void, onError: @escaping (AFError) -> Void) where T: Codable {
         AF.request(path, encoding: JSONEncoding.default).validate().responseDecodable(of: T.self) { (response) in
             guard let model = response.value else {
-                print(response)
+                onError(response.error!)
                 return
             }
             onSuccess(model)
         }
     }
-    
 }

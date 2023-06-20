@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import Alamofire
 
 class GetDataManager {
     private let getDataService: GetDataProtocol
@@ -16,11 +17,11 @@ class GetDataManager {
         self.url = UnsplashUrl.url.rawValue
     }
     
-    func getJsonData(onSuccess: @escaping (UnsplashData?)->(Void), onError: @escaping (String)->(Void)) {
+    func getJsonData(onSuccess: @escaping (UnsplashData?)->(Void), onError: @escaping (AFError)->(Void)) {
         getDataService.fetch(path: url) { (response:UnsplashData) in
             onSuccess(response)
         } onError: { error in
-            onError(error.localizedDescription)
+            onError(error )
         }
     }
     
