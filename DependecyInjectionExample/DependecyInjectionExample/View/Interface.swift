@@ -53,6 +53,7 @@ class Interface:UIView {
     
     // MARK: -  Actions
     @objc func buttonDidTapped(){
+        
     }
 }
 
