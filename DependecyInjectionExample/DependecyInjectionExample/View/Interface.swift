@@ -7,22 +7,32 @@
 
 import UIKit.UIView
 import SnapKit
+import AlamofireImage
+
+protocol ChangeImageProtocol: AnyObject{
+    func changeImage(_ image:Image)
+}
 
 class Interface:UIView {
+    // MARK: - Properties
+    weak var buttonDelegate: InterfaceProtocol?
+    private let viewModel = ViewModel()
+    
     // MARK: - UI Elements
     private let image: UIImageView = {
         let image = UIImageView()
         image.image = UIImage(systemName: "photo.stack.fill")
         image.contentMode = .scaleAspectFit
+        image.isHidden = true
         return image
     }()
     private let button: UIButton = {
         let button = UIButton(type: .system)
         button.setTitle("Refresh", for: .normal)
-        button.tintColor = .white
+        button.tintColor = .gray
         button.backgroundColor = .label
         button.layer.cornerRadius = 15
-        button.isUserInteractionEnabled = true
+        button.isUserInteractionEnabled = false
         button.addTarget(self, action: #selector(buttonDidTapped), for: .touchUpInside)
         return button
     }()
@@ -53,7 +63,28 @@ class Interface:UIView {
     
     // MARK: -  Actions
     @objc func buttonDidTapped(){
-        
+        if !activityIndicator.isAnimating {
+            image.isHidden = true
+            activityIndicator.startAnimating()
+            button.tintColor = .gray
+            buttonDelegate?.buttonDidTapped()
+            button.isUserInteractionEnabled = false
+        }
+    }
+}
+// MARK: - Change Image
+extension Interface: ChangeImageProtocol{
+    
+    func changeImage(_ image: AlamofireImage.Image) {
+        guard let cgImage = image.cgImage else {
+            print("image not transform to cgImage")
+            return
+        }
+        self.image.image = UIImage(cgImage: cgImage)
+        activityIndicator.stopAnimating()
+        self.image.isHidden = false
+        button.tintColor = .white
+        button.isUserInteractionEnabled = true
     }
 }
 
@@ -65,7 +96,7 @@ extension Interface {
         
         image.snp.makeConstraints { make in
             make.centerX.equalToSuperview()
-            make.top.equalTo(safeAreaLayoutGuide.snp.top).offset(30)
+            make.top.equalTo(safeAreaLayoutGuide.snp.top).offset(60)
             make.width.equalTo(safeAreaLayoutGuide.snp.width).offset(-30)
             make.height.equalTo(image.snp.width).multipliedBy(4.0/3.0)
         }
@@ -85,8 +116,10 @@ extension Interface {
     func setupActivityIndicator() {
         addSubview(activityIndicator)
         
+        activityIndicator.startAnimating()
+        
         activityIndicator.snp.makeConstraints { make in
-            make.centerX.centerY.equalToSuperview()
+            make.centerX.centerY.equalTo(image.snp.center)
         }
     }
 }
